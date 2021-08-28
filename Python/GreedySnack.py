@@ -7,5 +7,6 @@ W = 800
 H = 600
 
 size = (W,H)
-window = pygame.display.set_mode(size)
+window = pygame.splay.set_mode(size)
 pygame.display.set_caption("snake")
+score = 0
