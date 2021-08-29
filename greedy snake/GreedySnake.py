@@ -27,12 +27,13 @@ snake_body = [[300, 300], [290, 300], [280, 300]]
 direction = 'RIGHT'
 change_to = direction
 speed = 15
-'''
+
 
 # gain point randomly
 point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
-point_gained = True
 
+'''
+point_gained = True
 # frame controll
 fps_controller = pygame.time.Clock()
 flag = 0
@@ -88,7 +89,18 @@ class Snake:
         if self.direction == 'RIGHT':
            self.snake_pos[0] += 10
 
-
+class Point:
+    def __init__(self):
+        point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
+        
+    # update for the next point generate
+    def spawing(self):
+        global point_gained
+        #global point
+        if not point_gained:
+            self.point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10] # 在視窗內隨機生成
+        point_gained = True
+        
  
 
 if __name__ == '__main__':
