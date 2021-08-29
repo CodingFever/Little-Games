@@ -67,8 +67,8 @@ class Snake:
         global score
         global point_gained
         global flag
-        self.snake_body.insert(0, list(snake_pos))
-        if snake_pos[0] == point[0] and snake_pos[1] == point[1]:
+        self.snake_body.insert(0, list(self.snake_pos))
+        if self.snake_pos[0] == point[0] and self.snake_pos[1] == point[1]:
            score += 1
            flag = 1
            point_gained = False
