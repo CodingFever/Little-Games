@@ -22,14 +22,14 @@ score = 0
 
 direction = 'RIGHT'
 change_to = direction
-   
+speed = 15
 # snake initial
 '''
 snake_pos = [300, 300]
 snake_body = [[300, 300], [290, 300], [280, 300]]
 direction = 'RIGHT'
 change_to = direction
-speed = 15
+
 
 
 # gain point randomly
@@ -48,9 +48,9 @@ flag = 0
 # make Snake class
 class Snake:
     def __init__(self):
-        snake_pos = [300, 300]
-        snake_body = [[300, 300], [290, 300], [280, 300]]
-        speed = 15
+        self.snake_pos = [300, 300]
+        self.snake_body = [[300, 300], [290, 300], [280, 300]]
+        
         #pass
     
     def make_sure(self):
@@ -68,7 +68,7 @@ class Snake:
         if change_to == 'RIGHT' and direction != 'LEFT':
             direction = 'RIGHT'
     #if hit point, add 1 more block in the snake body
-    def growing(self):
+    def growing(self,point):
         #global snake_body
         global score
         global point_gained
@@ -86,27 +86,36 @@ class Snake:
         #global direction
         #global snack_pos
         if direction == 'UP':
-           snake_pos[1] -= 10
+           self.snake_pos[1] -= 10
         if direction == 'DOWN':
-           snake_pos[1] += 10
+           self.snake_pos[1] += 10
         if direction == 'LEFT':
-           snake_pos[0] -= 10
+           self.snake_pos[0] -= 10
         if direction == 'RIGHT':
-           snake_pos[0] += 10
+           self.snake_pos[0] += 10
 
 class Point:
     def __init__(self):
-        point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
-        point_gained = True
+        self.pos = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
+        self.point_gained = True
     # update for the next point generate
     def spawing(self):
         #global point_gained
         #global point
-        if not point_gained:
-            self.point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10] # 在視窗內隨機生成
+        if not self.point_gained:
+            self.pos = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10] # 在視窗內隨機生成
         self.point_gained = True
       
 #—————————useful function————————————————————————————————————————#
+
+# accelerate
+def accelerate():
+    global score
+    global speed
+    global flag
+    if speed <= 27 and flag == 1 :
+        speed += 1
+        flag = 0
 
 # show_Score
 def show_Score(choice, color, font, size):
@@ -201,29 +210,29 @@ def main():
         # call function
         snake.make_sure()
         snake.moving()
-        snake.growing()
+        snake.growing(point.pos)
         point.spawing()
 
         # print snake
-        for pos in snake_body:
+        for pos in snake.snake_body:
             # Snake body
             # .draw.rect(window, color, xy position)
             # xy_pos -> .Rect(x, y, size_x, size_y)
             pygame.draw.rect(game_window, green, pygame.Rect(pos[0], pos[1], 10, 10))
 
         # drew point using Rect
-        pygame.draw.rect(game_window, white, pygame.Rect(point[0], point[1], 10, 10))
+        pygame.draw.rect(game_window, white, pygame.Rect(point.pos[0], point.pos[1], 10, 10))
 
 
         # Game Over 
         # Hit frmae
-        if snake_pos[0] < 0 or snake_pos[0] > H-10:
+        if snake.snake_pos[0] < 0 or snake.snake_pos[0] > H-10:
             gameover()
-        if snake_pos[1] < 0 or snake_pos[1] > W-10:
+        if snake.snake_pos[1] < 0 or snake.snake_pos[1] > W-10:
             gameover()
         # hit snake
-        for block in snake_body[1:]:
-            if snake_pos[0] == block[0] and snake_pos[1] == block[1]:
+        for block in snake.snake_body[1:]:
+            if snake.snake_pos[0] == block[0] and snake.snake_pos[1] == block[1]:
                 gameover()
             show_Score(1, white, 'consolas', 20)
 
