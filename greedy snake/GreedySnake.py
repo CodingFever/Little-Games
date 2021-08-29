@@ -19,6 +19,9 @@ pygame.display.set_caption("snake")
 
 #score initial
 score = 0
+
+direction = 'RIGHT'
+change_to = direction
    
 # snake initial
 '''
@@ -47,8 +50,6 @@ class Snake:
     def __init__(self):
         snake_pos = [300, 300]
         snake_body = [[300, 300], [290, 300], [280, 300]]
-        direction = 'RIGHT'
-        change_to = 'RIGHT'
         speed = 15
         #pass
     
@@ -56,15 +57,16 @@ class Snake:
         #global direction #set global variable for defualt moving direction 
         #global change_to #set global variable for get moving direction 
         
-        if self.change_to == 'UP' and self.direction != 'DOWN':
-            self.direction = 'UP'
-        if self.change_to == 'DOWN' and self.direction != 'UP':
-            self.direction = 'DOWN'
-        if self.change_to == 'LEFT' and self.direction != 'RIGHT':
-            self.direction = 'LEFT'
-        if self.change_to == 'RIGHT' and self.direction != 'LEFT':
-            self.direction = 'RIGHT'
-
+        global direction 
+        global change_to 
+        if change_to == 'UP' and direction != 'DOWN':
+            direction = 'UP'
+        if change_to == 'DOWN' and direction != 'UP':
+            direction = 'DOWN'
+        if change_to == 'LEFT' and direction != 'RIGHT':
+            direction = 'LEFT'
+        if change_to == 'RIGHT' and direction != 'LEFT':
+            direction = 'RIGHT'
     #if hit point, add 1 more block in the snake body
     def growing(self):
         #global snake_body
@@ -83,14 +85,14 @@ class Snake:
     def moving(self):
         #global direction
         #global snack_pos
-        if self.direction == 'UP':
-           self.snake_pos[1] -= 10
-        if self.direction == 'DOWN':
-           self.snake_pos[1] += 10
-        if self.direction == 'LEFT':
-           self.snake_pos[0] -= 10
-        if self.direction == 'RIGHT':
-           self.snake_pos[0] += 10
+        if direction == 'UP':
+           snake_pos[1] -= 10
+        if direction == 'DOWN':
+           snake_pos[1] += 10
+        if direction == 'LEFT':
+           snake_pos[0] -= 10
+        if direction == 'RIGHT':
+           snake_pos[0] += 10
 
 class Point:
     def __init__(self):
@@ -170,8 +172,11 @@ def main():
 
     while True:   
         game_window.fill(black) # window color
-
+        snake = Snake()
+        point = Point()
         for event in pygame.event.get():   # event
+            
+
             if  event.type == pygame.QUIT: # x to quit
                 pygame.display.quit()
                 pygame.quit()
@@ -184,16 +189,15 @@ def main():
 
             # press w s a d / ↑ ↓ ← → to move
                 if event.key == pygame.K_UP or event.key == ord('w'):
-                    change_to = 'UP'                                    # 先儲存到預計移動方向
+                    snake.change_to = 'UP'                                    # 先儲存到預計移動方向
                 if event.key == pygame.K_DOWN or event.key == ord('s'):
-                    change_to = 'DOWN'
+                    snake.change_to = 'DOWN'
                 if event.key == pygame.K_LEFT or event.key == ord('a'):
-                    change_to = 'LEFT'
+                    snake.change_to = 'LEFT'
                 if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                    change_to = 'RIGHT'
+                    snake.change_to = 'RIGHT'
                 
-        snake = Snake()
-        point = Point()
+        
         # call function
         snake.make_sure()
         snake.moving()
