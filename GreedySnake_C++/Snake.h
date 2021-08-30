@@ -1,6 +1,6 @@
 #ifndef SHAKE_H
 #define SHAKE_H
-#include <windows.h>
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -10,14 +10,20 @@ using namespace std;
 
 class Snake{
 	private:
-		COORD pos;//structure in window.h
+		
         int speed; //speed of the snake
         char direction; // moving direction
         int length;//length of the snake
         
 
 	public:
-		Snake(COORD pos,int speed);
+		Snake();
+		void change_direction(char dire);
+		void movement();
+		
+
+
 		~Snake();
 	
 };
+#endif 
