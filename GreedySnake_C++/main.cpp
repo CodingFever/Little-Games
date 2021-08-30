@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 using namespace std;
 
 #define WIDTH 50
@@ -20,6 +21,11 @@ void board(){
 }
 
 int main(){
+	
 	board();
+	
+
+	
+		
 	return 0;
 }
