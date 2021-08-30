@@ -1,5 +1,5 @@
 #include "Snake.h"
-Snake::Snake (COORD pos,int speed){
+Snake::Snake (){
 	this->pos = pos;
 	this->speed = speed;
 	len = 1;
