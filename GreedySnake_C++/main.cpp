@@ -1,6 +1,9 @@
 #include <iostream>
 #include <windows.h>
+#include "Snake.h"
+
 using namespace std;
+
 
 #define WIDTH 50
 #define HEIGHT 25
