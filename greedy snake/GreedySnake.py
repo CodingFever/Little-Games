@@ -20,22 +20,9 @@ pygame.display.set_caption("snake")
 #score initial
 score = 0
 
-direction = 'RIGHT'
-change_to = direction
-speed = 15
-# snake initial
-'''
-snake_pos = [300, 300]
-snake_body = [[300, 300], [290, 300], [280, 300]]
-direction = 'RIGHT'
-change_to = direction
-
-
-
-# gain point randomly
-point = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
 point_gained = True
-'''
+speed = 15
+
 
 # frame controll
 fps_controller = pygame.time.Clock()
@@ -50,23 +37,24 @@ class Snake:
     def __init__(self):
         self.snake_pos = [300, 300]
         self.snake_body = [[300, 300], [290, 300], [280, 300]]
-        
+        self.direction = 'RIGHT'
+        self.change_to = self.direction
         #pass
     
     def make_sure(self):
         #global direction #set global variable for defualt moving direction 
         #global change_to #set global variable for get moving direction 
         
-        global direction 
-        global change_to 
-        if change_to == 'UP' and direction != 'DOWN':
-            direction = 'UP'
-        if change_to == 'DOWN' and direction != 'UP':
-            direction = 'DOWN'
-        if change_to == 'LEFT' and direction != 'RIGHT':
-            direction = 'LEFT'
-        if change_to == 'RIGHT' and direction != 'LEFT':
-            direction = 'RIGHT'
+        #global direction 
+        #global change_to 
+        if self.change_to == 'UP' and self.direction != 'DOWN':
+            self.direction = 'UP'
+        if self.change_to == 'DOWN' and self.direction != 'UP':
+            self.direction = 'DOWN'
+        if self.change_to == 'LEFT' and self.direction != 'RIGHT':
+            self.direction = 'LEFT'
+        if self.change_to == 'RIGHT' and self.direction != 'LEFT':
+            self.direction = 'RIGHT'
     #if hit point, add 1 more block in the snake body
     def growing(self,point):
         #global snake_body
@@ -85,26 +73,26 @@ class Snake:
     def moving(self):
         #global direction
         #global snack_pos
-        if direction == 'UP':
+        if self.direction == 'UP':
            self.snake_pos[1] -= 10
-        if direction == 'DOWN':
+        if self.direction == 'DOWN':
            self.snake_pos[1] += 10
-        if direction == 'LEFT':
+        if self.direction == 'LEFT':
            self.snake_pos[0] -= 10
-        if direction == 'RIGHT':
+        if self.direction == 'RIGHT':
            self.snake_pos[0] += 10
 
 class Point:
     def __init__(self):
         self.pos = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10]
-        self.point_gained = True
+        #self.point_gained = True
     # update for the next point generate
     def spawing(self):
-        #global point_gained
+        global point_gained
         #global point
-        if not self.point_gained:
-            self.pos = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10] # 在視窗內隨機生成
-        self.point_gained = True
+        if not point_gained:
+            self.pos = [random.randrange(1, (H//10)) * 10, random.randrange(1, (W//10)) * 10] 
+        point_gained = True
       
 #—————————useful function————————————————————————————————————————#
 
@@ -133,7 +121,7 @@ def show_Score(choice, color, font, size):
 # restart
 def restart(color, font, size):
         restart_font = pygame.font.SysFont(font, size)
-        restart_surface = restart_font.render('press ANY_KEY to restart', True, color)
+        restart_surface = restart_font.render('press SPACE to restart', True, color)
         restart_rect = restart_surface.get_rect()
         restart_rect.midtop = (H/2, W/1.4)
         game_window.blit(restart_surface, restart_rect)
@@ -178,14 +166,13 @@ def main():
     pygame.init() 
     
     global flag
-
+    snake = Snake()
+    point = Point()
     while True:   
         game_window.fill(black) # window color
-        snake = Snake()
-        point = Point()
+        
         for event in pygame.event.get():   # event
             
-
             if  event.type == pygame.QUIT: # x to quit
                 pygame.display.quit()
                 pygame.quit()
@@ -208,6 +195,7 @@ def main():
                 
         
         # call function
+
         snake.make_sure()
         snake.moving()
         snake.growing(point.pos)
@@ -223,17 +211,16 @@ def main():
         # drew point using Rect
         pygame.draw.rect(game_window, white, pygame.Rect(point.pos[0], point.pos[1], 10, 10))
 
-
         # Game Over 
         # Hit frmae
         if snake.snake_pos[0] < 0 or snake.snake_pos[0] > H-10:
-            gameover()
+            gameover(snake,point)
         if snake.snake_pos[1] < 0 or snake.snake_pos[1] > W-10:
-            gameover()
+            gameover(snake,point)
         # hit snake
         for block in snake.snake_body[1:]:
             if snake.snake_pos[0] == block[0] and snake.snake_pos[1] == block[1]:
-                gameover()
+                gameover(snake,point)
             show_Score(1, white, 'consolas', 20)
 
         # window update
