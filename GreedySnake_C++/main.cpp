@@ -3,31 +3,54 @@
 #include <ncurses.h>
 #include "Snake.h"
 using namespace std;
+
+#define KEY_UP 0403 // you don't need to put this if you are using Xcode
+
+#define KEY_DOWN 0402 // you don't need to put this if you are using Xcode
+
+#define KEY_LEFT 0404 // you don't need to put this if you are using Xcode
+
+#define KEY_RIGHT 0405 // you don't need to put this if you are using Xcode
+
+bool gameOver;
+
 #define WIDTH 50
 #define HEIGHT 25
+int x, y, Pointx, Pointy, score
 
-//Snake snake(WIDTH/2, HEIGHT/2,1);
+	//Snake snake(WIDTH/2, HEIGHT/2,1);
 
-//initial the playing background
-void board(){
-	
-	for (int i = 0; i < HEIGHT; i++){
+	//initial the playing background
+	void
+	board()
+{
+
+	for (int i = 0; i < HEIGHT; i++)
+	{
 		cout << "\t\t#";
-		for(int j = 0; j < WIDTH-2; j++){
-			if(i == 0|| i == HEIGHT-1){cout << "#";}
-			else if (i == 10 && j == 10){cout << "o";}
-			else{cout << " ";}
+		for (int j = 0; j < WIDTH - 2; j++)
+		{
+			if (i == 0 || i == HEIGHT - 1)
+			{
+				cout << "#";
+			}
+			else if (i == 10 && j == 10)
+			{
+				cout << "o";
+			}
+			else
+			{
+				cout << " ";
+			}
 		}
 		cout << "#\n";
 	}
 }
 
-int main(){
-	
-	board();
-	
+int main()
+{
 
-	
-		
+	board();
+
 	return 0;
 }
