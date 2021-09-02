@@ -1,56 +1,38 @@
+/*
+Since I am using mac, I cannot use window.h header. Instead, 
+I"ll using ncurses to make this game 
+*/
 #include <iostream>
 #include <cstdlib>
 #include <ncurses.h>
-#include "Snake.h"
+
 using namespace std;
-
-#define KEY_UP 0403 // you don't need to put this if you are using Xcode
-
-#define KEY_DOWN 0402 // you don't need to put this if you are using Xcode
-
-#define KEY_LEFT 0404 // you don't need to put this if you are using Xcode
-
-#define KEY_RIGHT 0405 // you don't need to put this if you are using Xcode
-
-bool gameOver;
 
 #define WIDTH 50
 #define HEIGHT 25
-int x, y, Pointx, Pointy, score
 
-	//Snake snake(WIDTH/2, HEIGHT/2,1);
-
-	//initial the playing background
-	void
-	board()
+enum eDirection
 {
+	STOP = 0,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+eDirection dir;
 
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		cout << "\t\t#";
-		for (int j = 0; j < WIDTH - 2; j++)
-		{
-			if (i == 0 || i == HEIGHT - 1)
-			{
-				cout << "#";
-			}
-			else if (i == 10 && j == 10)
-			{
-				cout << "o";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		cout << "#\n";
-	}
+int BodyX[100], BodyY[100];
+int Body_len = 0;
+bool gameOver;
+//position_x, position_y, point_pos_x, point_pox_y, score_gained
+int x, y, Pointx, Pointy, score;
+
+void SetUp()
+{
+	gameOver = false;
 }
 
 int main()
 {
-
-	board();
-
-	return 0;
+	SetUp();
 }
