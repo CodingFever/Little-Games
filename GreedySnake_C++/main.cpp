@@ -76,11 +76,11 @@ void Drew()
 	{
 		for (int b = 0; b < WIDTH + 2; b++)
 		{ //up and down boundary
-			if (a == 0 || a == HEIGHT+1)
+			if (a == 0 || a == HEIGHT + 1)
 			{
 				mvprintw(a, b, "-");
 			}
-			else if (b == 0 | b == WIDTH+1)
+			else if (b == 0 | b == WIDTH + 1)
 			{
 				mvprintw(a, b, "|");
 			}
@@ -102,12 +102,43 @@ void Drew()
 		}
 	}
 	//print the total score
-	mvprintw(HEIGHT+3, 0, "Score %d", score);
+	mvprintw(HEIGHT + 3, 0, "Score %d", score);
 	//add end to the print
 	refresh();
 	getch();
 	//end curses
 	endwin();
+}
+
+//getting the operation
+void Input()
+{
+	//initial state is FALSE.
+	keypad(stdscr, TRUE);
+	//halfdelay allow user to type something
+	//then getch returns the keypress
+	halfdelay(1); //gain input in 1 tenths sec
+
+	int gain = getch();
+
+	switch (gain)
+	{//getting input dir and change the snack dir
+	case KEY_LEFT:
+		dir = LEFT;
+		break;
+	case KEY_RIGHT:
+		dir = RIGHT;
+		break;
+	case KEY_UP:
+		dir = UP;
+		break;
+	case KEY_DOWN:
+		dir = DOWN;
+		break;
+	case 113: //exit -> q == 113
+		gameOver = true;
+		break;
+	}
 }
 
 int main()
