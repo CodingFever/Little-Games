@@ -7,7 +7,7 @@ I"ll using ncurses to make this game
 #include <ncurses.h>
 
 using namespace std;
-const int WIDTH = 20, HEIGHT = 20;
+const int WIDTH = 30, HEIGHT = 20;
 
 enum eDirection
 {
@@ -76,13 +76,13 @@ void Drew()
 	{
 		for (int b = 0; b < WIDTH + 2; b++)
 		{ //up and down boundary
-			if (a == 0 || a == 26)
+			if (a == 0 || a == HEIGHT+1)
 			{
-				mvprintw(a, b, "--");
+				mvprintw(a, b, "-");
 			}
-			else if (b == 0 | b == 21)
+			else if (b == 0 | b == WIDTH+1)
 			{
-				mvprintw(a, b, "+");
+				mvprintw(a, b, "|");
 			}
 			//head of the snake
 			else if (a == y && b == x)
@@ -102,7 +102,7 @@ void Drew()
 		}
 	}
 	//print the total score
-	mvprintw(23, 0, "Score %d", score);
+	mvprintw(HEIGHT+3, 0, "Score %d", score);
 	//add end to the print
 	refresh();
 	getch();
