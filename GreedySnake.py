@@ -12,8 +12,8 @@ green = (0, 255, 0)
 blue  = (0, 0, 255)
 
 # frame size
-H = 800
-W = 600
+H = 420
+W = 220
 game_window = pygame.display.set_mode((H, W))
 pygame.display.set_caption("snake")
 
@@ -35,8 +35,8 @@ flag = 0
 # make Snake class
 class Snake:
     def __init__(self):
-        self.snake_pos = [300, 300]
-        self.snake_body = [[300, 300], [290, 300], [280, 300]]
+        self.snake_pos = [100, 100]
+        self.snake_body = [[100, 100], [90, 100], [80, 100]]
         self.direction = 'RIGHT'
         self.change_to = self.direction
         #pass
@@ -159,7 +159,32 @@ def gameover(snake, points):
                         pygame.display.update()
                         main()
                         break
-            
+
+def board(game_window):
+    '''
+    # frame size
+    H = 420
+    W = 220
+    '''
+    line_W = 10
+    # top line
+    pygame.draw.rect(game_window, white, [0,0,W,line_W])
+    # bottom line
+    pygame.draw.rect(game_window, white, [0,H,W,line_W])
+    # left line
+    pygame.draw.rect(game_window, white, [0,0,line_W, H])
+    # right line
+    pygame.draw.rect(game_window, white, [W,0,line_W, H+line_W])
+
+
+    '''
+    for j in range(H-1):
+        pos = 0, 20 + j * 20, 20, 20
+        pygame.draw.rect(game_window,color, pos, W)
+        pos = (W - 1) * 20, 20 + j * 20, 20, 20
+        pygame.draw.rect(game_window,color, pos, W)
+
+    '''
 #————————— main function————————————————————————————————————————#
 
 def main():
@@ -169,8 +194,9 @@ def main():
     snake = Snake()
     point = Point()
     while True:   
-        game_window.fill(black) # window color
         
+        game_window.fill(black) # window color
+        board(game_window = game_window)
         for event in pygame.event.get():   # event
             
             if  event.type == pygame.QUIT: # x to quit
