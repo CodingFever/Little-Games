@@ -18,6 +18,7 @@ In addition, to make sure the ncurses works, need to followed guird from here: [
 After install everything, using this compile line:
 
 > g++ -Wall -Wextra main.cpp -lncurses
+
 > ./a.out
 
 Then you can see the game map
