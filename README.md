@@ -4,12 +4,12 @@ Achieved version:
 greedy snack in python
 The current goal -- greedy snack in c++
 
-#### Greedy Snake in Python
+### Greedy Snake in Python
 
 Using 2 classes to initial snake and point
 Using the global variable to track point and point_status
 
-#### Greedy Snake in C++
+### Greedy Snake in C++
 
 For c++, when using mac, we need to use ncurses-5.9 to imply the input and window. Using ncurses-5.9, we can capture the input keys and show in a seperated board.
 
