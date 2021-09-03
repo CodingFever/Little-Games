@@ -22,3 +22,5 @@ After install everything, using this compile line:
 > ./a.out
 
 Then you can see the game map
+
+If using window/Linux, can try to use window.h instead
