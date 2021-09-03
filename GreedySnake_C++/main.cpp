@@ -140,6 +140,38 @@ void Input()
 
 void Movement()
 {
+	/*
+	make sure the body print
+	
+	The logic will be like, when the next block move
+	to the prev block, it makes the same operation
+	eg: if head turn left at (1,1), the next body
+	block will make trun at the same pos(1,1)
+	again, if no change, then no change
+	*/
+
+	//gain the previous pos
+	int prevX = BodyX[0];
+	int prevY = BodyY[0];
+
+	int x2,y2;
+	//get cur_pos
+	BodyX[0] = x;
+	BodyY[0] = y;
+
+	for (int i = 0; i < Body_len; i++){
+		x2 = BodyX[i];
+		BodyX[i] = prevX;
+		prevX = x2;
+
+		y2 = BodyY[i];
+		BodyY[i] = prevY;
+		prevY = y2;
+
+	}
+
+
+
 	switch (dir)
 	{
 		{
