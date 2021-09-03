@@ -2,12 +2,16 @@
 
 Achieved version:
 greedy snack in python
-The current goal -- greedy snack in c++
+
+greedy snack in c++
+
+The current goal -- greedy snack in c
 
 ### Greedy Snake in Python
 
 Using 2 classes to initial snake and point
 Using the global variable to track point and point_status
+Using pygame.draw.rect to make a white border and change the determing situation (add 10 since the border is 10 pix)
 
 ### Greedy Snake in C++
 
