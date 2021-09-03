@@ -7,7 +7,7 @@ I"ll using ncurses to make this game
 #include <ncurses.h>
 
 using namespace std;
-const int WIDTH = 30, HEIGHT = 20;
+const int WIDTH = 20, HEIGHT = 20;
 
 enum eDirection
 {
@@ -50,7 +50,7 @@ void SetUp()
 	The main set-up for the snake start
 	*/
 	gameOver = false;
-	dir = STOP;
+	dir = LEFT;
 	//set snack position in the middle
 	x = WIDTH / 2;
 	y = HEIGHT / 2;
@@ -90,14 +90,18 @@ void PrintBoard()
 				mvprintw(a, b, "S");
 			}
 			//point generate and print
-			else if (a == Pointx && b == Pointy)
+			else if (a == Pointy && b == Pointx)
+			{
 				mvprintw(a, b, "P");
+			}
 			//print the snake body
 			else
 				for (int k = 0; k < Body_len; k++)
 				{
 					if (BodyX[k] == b && BodyY[k] == a)
+					{		
 						mvprintw(a, b, "o");
+					}
 				}
 		}
 	}
@@ -153,13 +157,14 @@ void Movement()
 	//gain the previous pos
 	int prevX = BodyX[0];
 	int prevY = BodyY[0];
-
+	//temp var
 	int x2,y2;
 	//get cur_pos
 	BodyX[0] = x;
 	BodyY[0] = y;
-
-	for (int i = 0; i < Body_len; i++){
+	//update and make change
+	//start when len>=1
+	for (int i = 1; i < Body_len; i++){
 		x2 = BodyX[i];
 		BodyX[i] = prevX;
 		prevX = x2;
@@ -170,8 +175,7 @@ void Movement()
 
 	}
 
-
-
+	//change direction
 	switch (dir)
 	{
 		{
@@ -196,18 +200,30 @@ void Movement()
 	{
 		gameOver = true;
 	}
+	//if touch point
 	if (x == Pointx && y == Pointy)
-	{
+	{	
+		//increase score
 		score++;
 		//generate new point pos
 		Pointx = (rand() % WIDTH) + 1;
 		Pointy = (rand() % HEIGHT) + 1;
+		//body length
+		Body_len++;
+		
 	}
+	//if hit body
+	for(int i = 0; i<Body_len; i++){
+		if(BodyX[i] == x && BodyY[i] == y)
+		{
+			gameOver = true;
+		}
+	}
+
 }
 int main()
 {
 	SetUp();
-	PrintBoard();
 	while (!gameOver)
 	{
 		PrintBoard();
