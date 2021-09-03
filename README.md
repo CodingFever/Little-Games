@@ -1,6 +1,7 @@
 # Greedy Snake
 
 Achieved version:
+
 greedy snack in python
 
 greedy snack in c++
