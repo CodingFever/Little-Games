@@ -87,12 +87,12 @@ void PrintBoard()
 			//head of the snake
 			else if (a == y && b == x)
 			{
-				mvprintw(a, b, "S");
+				mvprintw(a, b, "$");
 			}
 			//point generate and print
 			else if (a == Pointy && b == Pointx)
 			{
-				mvprintw(a, b, "P");
+				mvprintw(a, b, "*");
 			}
 			//print the snake body
 			else
