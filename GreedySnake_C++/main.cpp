@@ -60,7 +60,7 @@ void SetUp()
 	score = 0;
 }
 
-void Drew()
+void PrintBoard()
 {
 	//start with clear the window
 	clear();
@@ -105,9 +105,6 @@ void Drew()
 	mvprintw(HEIGHT + 3, 0, "Score %d", score);
 	//add end to the print
 	refresh();
-	getch();
-	//end curses
-	endwin();
 }
 
 //getting the operation
@@ -122,7 +119,7 @@ void Input()
 	int gain = getch();
 
 	switch (gain)
-	{//getting input dir and change the snack dir
+	{ //getting input dir and change the snack dir
 	case KEY_LEFT:
 		dir = LEFT;
 		break;
@@ -141,9 +138,53 @@ void Input()
 	}
 }
 
+void Movement()
+{
+	switch (dir)
+	{
+		{
+		case LEFT:
+			x--;
+			break;
+		case RIGHT:
+			x++;
+			break;
+		case UP:
+			y--;
+			break;
+		case DOWN:
+			y++;
+			break;
+		default:
+			break;
+		}
+	}
+	//if hit the boudary
+	if (x > WIDTH || y > HEIGHT || x < 1 || y < 1)
+	{
+		gameOver = true;
+	}
+	if (x == Pointx && y == Pointy)
+	{
+		score++;
+		//generate new point pos
+		Pointx = (rand() % WIDTH) + 1;
+		Pointy = (rand() % HEIGHT) + 1;
+	}
+}
 int main()
 {
 	SetUp();
-	Drew();
+	PrintBoard();
+	while (!gameOver)
+	{
+		PrintBoard();
+		Input();
+		Movement();
+	}
+
+	getch();
+	//end curses
+	endwin();
 	return 0;
 }
