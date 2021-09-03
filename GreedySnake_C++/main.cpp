@@ -7,7 +7,7 @@ I"ll using ncurses to make this game
 #include <ncurses.h>
 
 using namespace std;
-const int WIDTH = 20, HEIGHT = 20;
+const int WIDTH = 25, HEIGHT = 20;
 
 enum eDirection
 {
