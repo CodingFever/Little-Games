@@ -12,8 +12,8 @@ green = (0, 255, 0)
 blue  = (0, 0, 255)
 
 # frame size
-H = 420
-W = 220
+H = 600
+W = 400
 game_window = pygame.display.set_mode((H, W))
 pygame.display.set_caption("snake")
 
@@ -113,7 +113,7 @@ def show_Score(choice, color, font, size):
         score_surface = score_font.render('The Score : ' + str(score), True, color)
         score_rect = score_surface.get_rect()
         if choice == 1:
-            score_rect.midtop = (H/10, 15)
+            score_rect.midtop = (H/5, 15)
         else:
             score_rect.midtop = (H/2, W/2)
         game_window.blit(score_surface, score_rect)
@@ -124,6 +124,7 @@ def restart(color, font, size):
         restart_surface = restart_font.render('press SPACE to restart', True, color)
         restart_rect = restart_surface.get_rect()
         restart_rect.midtop = (H/2, W/1.4)
+        
         game_window.blit(restart_surface, restart_rect)
     
 #gameover
@@ -145,7 +146,7 @@ def gameover(snake, points):
             for event in pygame.event.get():
 
                 if event.type == pygame.QUIT:
-                    time.sleep(1) # pause
+                    time.sleep(0) # pause
                     pygame.quit()
                 
 
@@ -155,7 +156,7 @@ def gameover(snake, points):
                         snake = Snake()
                         points = Point()
 
-                        time.sleep(1) # pause
+                        time.sleep(0) # pause
                         pygame.display.update()
                         main()
                         break
@@ -163,28 +164,19 @@ def gameover(snake, points):
 def board(game_window):
     '''
     # frame size
-    H = 420
-    W = 220
+    H = 600
+    W = 400
     '''
     line_W = 10
     # top line
-    pygame.draw.rect(game_window, white, [0,0,W,line_W])
+    pygame.draw.rect(game_window, white, [0,0,H,line_W])
     # bottom line
-    pygame.draw.rect(game_window, white, [0,H,W,line_W])
+    pygame.draw.rect(game_window, white, [0,W-10,H,line_W])
     # left line
     pygame.draw.rect(game_window, white, [0,0,line_W, H])
     # right line
-    pygame.draw.rect(game_window, white, [W,0,line_W, H+line_W])
+    pygame.draw.rect(game_window, white, [H-10,0,line_W, H+line_W])
 
-
-    '''
-    for j in range(H-1):
-        pos = 0, 20 + j * 20, 20, 20
-        pygame.draw.rect(game_window,color, pos, W)
-        pos = (W - 1) * 20, 20 + j * 20, 20, 20
-        pygame.draw.rect(game_window,color, pos, W)
-
-    '''
 #————————— main function————————————————————————————————————————#
 
 def main():
@@ -239,11 +231,11 @@ def main():
 
         # Game Over 
         # Hit frmae
-        if snake.snake_pos[0] < 0 or snake.snake_pos[0] > H-10:
+        if snake.snake_pos[0] < 10 or snake.snake_pos[0] > H-20:
             gameover(snake,point)
-        if snake.snake_pos[1] < 0 or snake.snake_pos[1] > W-10:
+        if snake.snake_pos[1] < 10 or snake.snake_pos[1] > W-20:
             gameover(snake,point)
-        # hit snake
+        # hit snake body
         for block in snake.snake_body[1:]:
             if snake.snake_pos[0] == block[0] and snake.snake_pos[1] == block[1]:
                 gameover(snake,point)
