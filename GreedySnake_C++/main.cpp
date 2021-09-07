@@ -20,7 +20,7 @@ enum eDirection
 eDirection dir;
 
 int BodyX[100], BodyY[100];
-int Body_len = 0;
+int Body_len = 4;
 bool gameOver;
 //position_x, position_y, point_pos_x, point_pox_y, score_gained
 int x, y, Pointx, Pointy, score;
