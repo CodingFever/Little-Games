@@ -10,6 +10,7 @@ typedef struct pos
     int y;
 } position_list;
 
+
 enum eDirection
 {
     STOP = 0,
@@ -18,13 +19,15 @@ enum eDirection
     UP,
     DOWN
 };
+//get snake's pos for each part
+position_list snake_pos[120];
 
 int direction = RIGHT; //snake default moving direction
 int ch;                //input
 int speed = 500;
 
 int Score = 0;
-int SnakeLength = 1; //initial snack-body-len
+int SnakeLength = 4; //initial snack-body-len
 WINDOW *board;       //window size
 
 void SetUp()
@@ -43,7 +46,7 @@ void SetUp()
     board = newwin(HEIGHT, WIDTH, offsety, offsetx); //get new board
 }
 
-void Game_Page()
+void Game_Page(offsetx,offsety)
 {
     //int offsetx = (COLS - WIDTH) / 2;
     //int offsety = (LINES - HEIGHT) / 2;
@@ -56,29 +59,36 @@ void Game_Page()
             break;
         }
         wclear(board);
-        mvprintw(3 + HEIGHT / 2, WIDTH / 2 + 7, "Greedy Snake Game");
-        mvprintw(6 + HEIGHT / 2, WIDTH / 2 + 7, "Enter 'S' to start");
-        mvprintw(7 + HEIGHT / 2, WIDTH / 2 + 7, "Enter 'Q' to quit");
-        mvprintw(4, WIDTH / 2 + 11, "Score: %d", Score);
+        mvprintw(offsety + HEIGHT / 2-5, offsetx+19, "Greedy Snake Game");
+        mvprintw(offsety + HEIGHT / 2, offsetx+19, "Enter 'S' to start");
+        mvprintw(offsety + HEIGHT / 2+1, offsetx+19, "Enter 'Q' to quit");
+        mvprintw(3, offsetx+HEIGHT/2+14, "Score: %d", Score);
         box(board, 0, 0);
         wrefresh(board);
     }
 }
 
-void CreateSnake()
+void CreateSnake(offsetx,offsety)
 {
+    for(int i = 0;i < SnakeLength;i++){
+        snake_pos[i].x = offsetx+10-i;
+        snake_pos[i].y = offsety;
+    }
+    mvprintw(4, WIDTH / 2 + 11, "Score: %d", Score);
+    box(board,0,0);
+    wrefresh(board);
 }
-void Game()
+void Game(offsetx,offsety)
 {
-    int offsetx = (COLS - WIDTH) / 2;
-    int offsety = (LINES - HEIGHT) / 2;
-    //CreateSnake();
+    CreateSnake(offsetx,offsety);
 }
 
 int main()
 {
     SetUp();
-    Game_Page();
-    Game();
+    int offsetx = (COLS - WIDTH) / 2;
+    int offsety = (LINES - HEIGHT) / 2;
+    Game_Page(offsetx,offsety);
+    Game(offsetx,offsety);
     return 0;
 }
