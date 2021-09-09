@@ -30,6 +30,13 @@ int Score = 0;
 int SnakeLength = 4; //initial snack-body-len
 WINDOW *board;       //window size
 
+
+void SetUp();//initial
+void Game();
+bool Generate_Point();
+//void GameOver();
+
+
 void SetUp()
 {
 
@@ -54,7 +61,6 @@ void Game_Page(offsetx,offsety)
     //wait for the game start
     while (getch() != 's')
     {
-        
         //if (getch() == 'q')
         //{
         //    break;
@@ -86,7 +92,7 @@ void CreateSnake(offsetx,offsety)
     box(board,0,0);
     wrefresh(board);
 }
-bool Generat_Point(){
+bool Generate_Point(){
     srand(time(NULL)); 
     int Point_y = (rand() % (HEIGHT-1));
     int Point_x = (rand() % (WIDTH-1));
@@ -105,12 +111,41 @@ bool Generat_Point(){
         Point.x = Point_x;
         return true;
 }
+void GetDir(){
+    if (ch != ERR){
+        switch(ch) {
+            case KEY_UP:
+                direction = (direction == DOWN)?DOWN:UP;
+                break;
+            case KEY_DOWN:
+                    direction = (direction == UP)?UP:DOWN;
+                    break;
+            case KEY_RIGHT:
+                    direction = (direction == LEFT)?LEFT:RIGHT;
+                    break;
+            case KEY_LEFT:
+                    direction = (direction == RIGHT)?RIGHT:LEFT;
+                    break;
+            default:
+                    break;
+            }
+
+    }
+}
+void Move();
+//void MoveHead();
 void Game(offsetx,offsety)
 {
     CreateSnake(offsetx,offsety);
-    while(Generat_Point()){
+    while(Generate_Point()){
         while ((ch = getch()) != 'q') {
             wclear(board);
+            
+            GetDir();//get snake's direction
+            /*
+            Move();//move body
+            MoveHead();//change heading dir
+            */
             mvprintw(1,offsetx+HEIGHT/2+10, "Score: %d ",Score);
             box(board, 0 , 0);
             wrefresh(board);
@@ -125,7 +160,6 @@ int main()
     int offsety = (LINES - HEIGHT) / 2;
     Game_Page(offsetx,offsety);
     if(getch() == 's'){
-
         Game(offsetx,offsety);
     }
     
