@@ -132,8 +132,38 @@ void GetDir(){
 
     }
 }
-void Move();
-//void MoveHead();
+void Move(){
+    position_list temp;
+    temp.x = snake_pos[SnakeLength-1].x;
+    temp.y = snake_pos[SnakeLength-1].y;
+    for(int i = SnakeLength-1; i > 0; i--){
+        snake_pos[i].x = snake_pos[i-1].x;
+        snake_pos[i].y = snake_pos[i-1].y;
+        //output snake body in position shows moving direction
+        mvwaddch(board, snake_pos[i].y, snake_pos[i].x, '#');
+    }
+}
+void MoveHead(){
+    switch (direction) {
+        //get moving direction
+        case UP:
+            (snake_pos[0].y - 1 == 0) ? snake_pos[0].y = HEIGHT - 2 : snake_pos[0].y--;
+            break;
+        case DOWN:
+            (snake_pos[0].y + 1 == HEIGHT - 1 )? snake_pos[0].y = 1 : snake_pos[0].y++;
+            break;
+        case RIGHT:
+            (snake_pos[0].x + 1 == WIDTH - 1 )? snake_pos[0].x = 1 : snake_pos[0].x++;
+            break;
+        case LEFT:
+            (snake_pos[0].x - 1 == 0 )? snake_pos[0].x = WIDTH - 2 : snake_pos[0].x--;
+            break;
+        default:
+            break;
+    }
+    //output snake head in position
+    mvwaddch(board, snake_pos[0].y, snake_pos[0].x, '0');
+}
 void Game(offsetx,offsety)
 {
     CreateSnake(offsetx,offsety);
@@ -142,10 +172,9 @@ void Game(offsetx,offsety)
             wclear(board);
             
             GetDir();//get snake's direction
-            /*
             Move();//move body
             MoveHead();//change heading dir
-            */
+           
             mvprintw(1,offsetx+HEIGHT/2+10, "Score: %d ",Score);
             box(board, 0 , 0);
             wrefresh(board);
